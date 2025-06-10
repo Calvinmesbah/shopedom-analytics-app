@@ -1,6 +1,4 @@
 'use client';
-
-import { useEffect } from 'react';
 import { useAnalyticsEvents } from './providers/AnalyticsEventsProvider'; // Adjust path as needed
 import EventCard from './EventCard'; // Adjust path as needed
 
