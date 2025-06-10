@@ -23,7 +23,8 @@ function EventCard({ eventName, eventCount, variationRate, info }: TransformedEv
                 <div className="flex justify-between gap-2 w-full">
                     <h2 className="text-xl font-semibold text-main-blue flex gap-2 items-start">
                         {formatEventName(eventName)}
-                        <Tooltip title={info}>
+                        <Tooltip enterTouchDelay={0}
+                          leaveTouchDelay={3000} title={info}>
                           <InfoIcon className="text-black/40 cursor-pointer" fontSize="small" sx={{marginTop:"0.2rem"}}/>
                         </Tooltip>
                     </h2>
