@@ -1,17 +1,12 @@
 "use client";
 import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { TransformedEventData } from '@/types/EventData';
-
-type RateItem = {
-  name: string;
-  rate: number;
-  variation: string;
-};
+import { TransformedRateData } from '@/types/RateData';
 
 type AnalyticsEventsContextType = {
   events: TransformedEventData[];
-  rates: RateItem[];
-  insc:  RateItem | null;
+  rates: TransformedRateData[];
+  insc:  TransformedRateData | null;
   dateRange: string;
   loading: boolean;
   error: string | null;
@@ -30,8 +25,8 @@ export const AnalyticsEventsProvider = ({
   children: ReactNode;
 }) => {
   const [events, setEvents] = useState<TransformedEventData[]>(initialEvents);
-  const [rates, setRates] = useState<RateItem[]>([]);
-  const [insc, setInsc] = useState<RateItem | null>(null);
+  const [rates, setRates] = useState<TransformedRateData[]>([]);
+  const [insc, setInsc] = useState<TransformedRateData | null>(null);
   const [dateRange, setDateRange] = useState<string>(initialDateRange);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +37,7 @@ export const AnalyticsEventsProvider = ({
     try {
       const res = await fetch(`/api/events?dateRange=${encodeURIComponent(range)}`);
       if (!res.ok) throw new Error('Failed to fetch analytics events');
-      const data:{events:any, rates:any, insc:any} = await res.json();
+      const data:{events:TransformedEventData[], rates:TransformedRateData[], insc:TransformedRateData} = await res.json();
 
       // Remove 'sign_up' event from events list
       const visibleEvents = data.events.filter((e: any) => e.eventName !== 'sign_up');
