@@ -42,7 +42,7 @@ export const AnalyticsEventsProvider = ({
     try {
       const res = await fetch(`/api/events?dateRange=${encodeURIComponent(range)}`);
       if (!res.ok) throw new Error('Failed to fetch analytics events');
-      const data = await res.json();
+      const data:{events:any, rates:any, insc:any} = await res.json();
 
       // Remove 'sign_up' event from events list
       const visibleEvents = data.events.filter((e: any) => e.eventName !== 'sign_up');

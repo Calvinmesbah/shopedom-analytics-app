@@ -32,33 +32,33 @@ function Dashboard() {
   return (
     <main className="bg-secondary-blue p-6 rounded-lg overflow-auto h-fit space-y-10">
       {/* 1. Events Section */}
-      <section className='w-full max-w-[100rem]'>
-        <h1 className="text-5xl text-white font-bold mb-6">Nombres d'événements</h1>
-          <div id="events_cards" className="flex flex-wrap gap-6 md:gap-x-0 md:gap-y-6">
-            {events.map((event, index) => (
-              <div key={event.eventName} className="md:flex items-center">
-                <EventCard
-                  key={index}
-                  eventName={event.eventName}
-                  eventCount={event.eventCount}
-                  variationRate={event.variationRate}
-                />
-                {index < events.length - 1 && <img src="/Arrow.png/" className="hidden md:block" alt="arrow" />}
-              </div>
-            ))}
+      <section className="w-full max-w-[100rem]">
+        <h1 className="text-5xl text-white font-bold mb-6">Nombres d&apos;événements</h1>
+        <div id="events_cards" className="flex flex-wrap gap-6 md:gap-x-0 md:gap-y-6">
+          {events.map((event, index) => (
+            <div key={event.eventName} className="md:flex items-center">
+              <EventCard
+                key={index}
+                eventName={event.eventName}
+                eventCount={event.eventCount}
+                variationRate={event.variationRate}
+              />
+              {index < events.length - 1 && <img src="/Arrow.png/" className="hidden md:block" alt="arrow" />}
+            </div>
+          ))}
         </div>
       </section>
 
       {/* 2. Rates Section */}
-      <section className='w-full max-w-[100rem]'>
+      <section className="w-full max-w-[100rem]">
         <h1 className="text-5xl text-white font-bold mb-6">Taux de conversion</h1>
         <div className="flex flex-wrap gap-6">
           {rates.map((rate, i) => (
             <EventCard
-                key={i}
-                eventName={rate.name}
-                eventCount={Math.round(rate.rate)+"%"}
-                variationRate={rate.variation}
+              key={i}
+              eventName={rate.name}
+              eventCount={Math.round(rate.rate) + '%'}
+              variationRate={rate.variation}
             />
           ))}
         </div>
@@ -66,13 +66,13 @@ function Dashboard() {
 
       {/* 3. Taux d’inscription */}
       {insc !== null && (
-        <section className='w-full max-w-[80rem]'>
-          <h1 className="text-5xl text-white font-bold mb-6">Taux d’inscription</h1>
+        <section className="w-full max-w-[80rem]">
+          <h1 className="text-5xl text-white font-bold mb-6">Taux d&rsquo;inscription</h1>
           <EventCard
             eventName={insc.name}
-            eventCount={Math.round(insc.rate)+"%"}
+            eventCount={Math.round(insc.rate) + '%'}
             variationRate={insc.variation}
-           />
+          />
         </section>
       )}
     </main>

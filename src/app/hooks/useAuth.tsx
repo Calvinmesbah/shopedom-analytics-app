@@ -76,6 +76,7 @@ export function useAuth() {
                 return { success: false, message: data.message };
             }
         } catch (error) {
+            console.error('Login error:', error);
             return { success: false, message: 'Une erreur s\'est produite. Veuillez réessayer.' };
         }
     };
