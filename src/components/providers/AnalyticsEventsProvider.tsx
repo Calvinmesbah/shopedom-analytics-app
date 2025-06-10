@@ -40,7 +40,7 @@ export const AnalyticsEventsProvider = ({
       const data:{events:TransformedEventData[], rates:TransformedRateData[], insc:TransformedRateData} = await res.json();
 
       // Remove 'sign_up' event from events list
-      const visibleEvents = data.events.filter((e: any) => e.eventName !== 'sign_up');
+      const visibleEvents = data.events.filter((e: TransformedEventData) => e.eventName !== 'sign_up');
 
       setEvents(visibleEvents);
       // Expecting data.rates as [{name, rate, variationRate}, ...]
