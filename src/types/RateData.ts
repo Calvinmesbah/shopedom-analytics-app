@@ -1,5 +1,5 @@
 export interface TransformedRateData {
   name: string;
-  rate: number | string;
+  rate: number;
   variation: string;
 }
