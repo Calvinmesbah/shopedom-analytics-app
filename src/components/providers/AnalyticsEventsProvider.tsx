@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { TransformedEventData } from '@/types/EventData';
@@ -48,13 +49,9 @@ export const AnalyticsEventsProvider = ({
       // insc is a number, e.g. 0.1234
       setInsc(data.insc ?? null);
       setDateRange(range);
-    } catch (err: unknown) {
-       if (err instanceof Error) {
-    setError(err.message);
-    } else {
-     setError('Unknown error');
-    }
-   }finally {
+    } catch (err: any) {
+      setError(err.message || 'Unknown error');
+    } finally {
       setLoading(false);
     }
   };
