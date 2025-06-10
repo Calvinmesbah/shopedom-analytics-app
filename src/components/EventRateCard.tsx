@@ -1,6 +1,6 @@
 function EventRateCard({name, rate, count}: {name: string, rate: string, count: string}) {
     return ( 
-        <div className="rounded-xl p-4 bg-gray-background border-2 border-main-blue w-[20rem] h-fit">
+        <div className="rounded-xl p-4 bg-gray-background border-2 border-main-blue w-[23rem] h-fit">
             <div className="flex justify-between items-start mb-2">
                 <div className="flex justify-between w-full">
                     <h2 className="text-2xl font-semibold text-main-blue">

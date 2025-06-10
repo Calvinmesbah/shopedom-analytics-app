@@ -5,11 +5,7 @@ import { useAnalyticsEvents } from './providers/AnalyticsEventsProvider'; // Adj
 import EventCard from './EventCard'; // Adjust path as needed
 
 function Dashboard() {
-  const { events, loading, error, updateDateRange, rates, insc } = useAnalyticsEvents();
-
-  useEffect(() => {
-    updateDateRange('7daysAgo');
-  }, []);
+  const { events, loading, error, rates, insc } = useAnalyticsEvents();
 
   if (loading) {
     return (
@@ -33,17 +29,18 @@ function Dashboard() {
     <main className="bg-secondary-blue p-6 rounded-lg overflow-auto h-fit space-y-10">
       {/* 1. Events Section */}
       <section className="w-full max-w-[100rem]">
-        <h1 className="text-5xl text-white font-bold mb-6">Nombres d&apos;événements</h1>
-        <div id="events_cards" className="flex flex-wrap gap-6 md:gap-x-0 md:gap-y-6">
+        <h1 className="text-4xl text-white font-bold mb-6">Nombres d&apos;événements</h1>
+        <div id="events_cards" className="grid grid-cols-1 md:flex flex-wrap gap-6 md:gap-x-0 md:gap-y-6">
           {events.map((event, index) => (
-            <div key={event.eventName} className="md:flex items-center">
+            <div key={event.eventName} className="flex flex-col md:flex md:flex-row items-center">
               <EventCard
                 key={index}
+                info={event.info}
                 eventName={event.eventName}
                 eventCount={event.eventCount}
                 variationRate={event.variationRate}
               />
-              {index < events.length - 1 && <img src="/Arrow.png/" className="hidden md:block" alt="arrow" />}
+              {index < events.length - 1 && <img src="/Arrow.png/" className="block rotate-90 md:rotate-0" alt="arrow" />}
             </div>
           ))}
         </div>
@@ -51,13 +48,14 @@ function Dashboard() {
 
       {/* 2. Rates Section */}
       <section className="w-full max-w-[100rem]">
-        <h1 className="text-5xl text-white font-bold mb-6">Taux de conversion</h1>
+        <h1 className="text-4xl text-white font-bold mb-6">Taux de conversion</h1>
         <div className="flex flex-wrap gap-6">
           {rates.map((rate, i) => (
             <EventCard
               key={i}
+              info={rate.info}
               eventName={rate.name}
-              eventCount={Math.round(rate.rate) + '%'}
+              eventCount={parseFloat(rate.rate.toFixed(2)) + '%'}
               variationRate={rate.variation}
             />
           ))}
@@ -67,10 +65,11 @@ function Dashboard() {
       {/* 3. Taux d’inscription */}
       {insc !== null && (
         <section className="w-full max-w-[80rem]">
-          <h1 className="text-5xl text-white font-bold mb-6">Taux d&rsquo;inscription</h1>
+          <h1 className="text-4xl text-white font-bold mb-6">Taux d&rsquo;inscription</h1>
           <EventCard
             eventName={insc.name}
-            eventCount={Math.round(insc.rate) + '%'}
+            info={insc.info}
+            eventCount={parseFloat(insc.rate.toFixed(2)) + '%'}
             variationRate={insc.variation}
           />
         </section>

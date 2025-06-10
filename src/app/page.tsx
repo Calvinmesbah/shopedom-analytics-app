@@ -6,7 +6,7 @@ import { AnalyticsEventsProvider } from "@/components/providers/AnalyticsEventsP
 export default function Home() {
   return (
     <ProtectedRoute>
-    <AnalyticsEventsProvider initialDateRange="7daysAgo" initialEvents={[]}>
+    <AnalyticsEventsProvider initialDateRange="24hours" initialEvents={[]}>
     <div className="p-3 flex flex-col gap-6">
       <Header/>
       <Dashboard/>

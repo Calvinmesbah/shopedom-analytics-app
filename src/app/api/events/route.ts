@@ -121,6 +121,17 @@ export async function GET(request: NextRequest) {
       purchase: 'Achats',
     };
 
+    const eventInfos: Record<string, string> = {
+      page_view: 'Nombre total de pages vues par les visiteurs sur votre site',
+      view_category: 'Nombre de fois où les utilisateurs ont consulté une page de catégorie de produits',
+      view_item: 'Nombre de fois où les utilisateurs ont consulté une page produit spécifique',
+      view_cart: 'Nombre de fois où les utilisateurs ont consulté leur panier',
+      add_to_cart: 'Nombre de produits ajoutés au panier par les utilisateurs',
+      begin_checkout: 'Nombre de processus de commande initiés par les utilisateurs',
+      sed_view_payment_page: 'Nombre de fois où la page de paiement a été consultée',
+      purchase: 'Nombre total d\'achats finalisés sur votre site',
+    };
+
     const events = TARGET_EVENTS.map((eventName) => {
       const current = currentCounts[eventName] || 0;
       const previous = previousCounts[eventName] || 0;
@@ -130,8 +141,16 @@ export async function GET(request: NextRequest) {
         eventName: eventNameTranslations[eventName] || eventName,
         eventCount: current,
         variationRate: variation !== null ? `${variation.toFixed(2)}%` : 'N/A',
+        info: eventInfos[eventName] || 'Information non disponible',
       };
     });
+
+    const rateInfos: Record<string, string> = {
+      'Conversion livraison': 'Pourcentage d\'utilisateurs qui arrivent à la page de paiement après avoir commencé le processus de commande',
+      'Conversion globale livraison': 'Pourcentage d\'utilisateurs qui arrivent à la page de paiement parmi ceux qui ont consulté leur panier',
+      'Paiement > achat': 'Pourcentage d\'utilisateurs qui finalisent leur achat après avoir consulté la page de paiement',
+      'Conversion store': 'Pourcentage d\'utilisateurs qui effectuent un achat après avoir consulté une page produit',
+    };
 
     const rates = [
       {
@@ -169,12 +188,13 @@ export async function GET(request: NextRequest) {
 
       return {
         name,
-        rate: currentRate,
+        rate: parseFloat(currentRate.toFixed(2)),
         variation: variation !== null ? `${variation.toFixed(2)}%` : 'N/A',
+        info: rateInfos[name] || 'Information non disponible',
       };
     });
 
-    // Taux d’insc = sign_up (unique) / add_to_cart (unique)
+    // Taux d'insc = sign_up (unique) / add_to_cart (unique)
     const signUpCurrent = currentUnique['sign_up'] || 0;
     const addToCartCurrent = currentUnique['add_to_cart'] || 0;
     const signUpPrevious = previousUnique['sign_up'] || 0;
@@ -188,6 +208,7 @@ export async function GET(request: NextRequest) {
       name: 'Taux d’insc',
       rate: currentInsc,
       variation: inscVariation !== null ? `${inscVariation.toFixed(2)}%` : 'N/A',
+      info: 'Pourcentage d\'utilisateurs qui s\'inscrivent parmi ceux qui ajoutent des produits au panier (utilisateurs uniques)',
     };
 
     return NextResponse.json({ events, rates, insc });
