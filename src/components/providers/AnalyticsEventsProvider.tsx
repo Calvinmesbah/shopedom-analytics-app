@@ -48,9 +48,13 @@ export const AnalyticsEventsProvider = ({
       // insc is a number, e.g. 0.1234
       setInsc(data.insc ?? null);
       setDateRange(range);
-    } catch (err: any) {
-      setError(err.message || 'Unknown error');
-    } finally {
+    } catch (err: unknown) {
+       if (err instanceof Error) {
+    setError(err.message);
+    } else {
+     setError('Unknown error');
+    }
+   }finally {
       setLoading(false);
     }
   };
